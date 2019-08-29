@@ -57,7 +57,7 @@ class PurgeCache extends CorePurgeCache
      * @return bool|null
      * @throws PurgeCacheException
      */
-    private function validateResponse(Uri $server, string $response): ?bool
+    private function validateResponse(Uri $server, string $response): bool
     {
         $regexParse = [];
         preg_match('/^HTTP\/\d+.\d+\s(\d+)([\s\S]+)Date:/', $response, $regexParse);
@@ -74,5 +74,6 @@ class PurgeCache extends CorePurgeCache
             }
             throw new PurgeCacheException($message);
         }
+        throw new PurgeCacheException(sprintf('Response is malformed. Response: %s', $response));
     }
 }
